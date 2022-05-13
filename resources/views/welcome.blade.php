@@ -11,10 +11,12 @@
         <script defer src="{{ mix('js/app.js') }}"></script> 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     </head>
-    <body>
+    <body class="main">
         <div id="app">
             <header-component></header-component>
-            <router-view></router-view>
+            <div class="main-content">
+                <router-view></router-view>
+            </div>
         </div>
     </body>
 </html>
