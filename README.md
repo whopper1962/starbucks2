@@ -28,10 +28,15 @@ composer install
 
 ### 3.
 ```
-php artisan serve
+php artisan key:generate
 ```
 
 ### 4.
+```
+php artisan serve
+```
+
+### 5.
 ```
 npm run watch
 ```
