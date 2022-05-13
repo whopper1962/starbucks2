@@ -1,9 +1,10 @@
 <template>
 <div>
-  <h2>Hello starbucks</h2>
   <template v-for="(item, index) in items">
     <img :key="`item_img_${index}`" :src="`https://product.starbucks.co.jp${item.item_img}`">
-    <p :key="`item_name_${index}`">{{ item.product_name }}</p>
+    <h4 :key="`item_name_${index}`">{{ item.product_name }}</h4>
+    <p :key="`item_catchcopy_${index}`">{{ item.catchcopy }}</p>
+    <p :key="`item_product_note_${index}`" v-html="item.product_note"/>
   </template>
 </div>
 </template>
