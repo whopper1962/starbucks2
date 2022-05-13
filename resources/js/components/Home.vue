@@ -6,7 +6,7 @@
           <img class="card-img-top" :key="`item_img_${index}`" :src="`https://product.starbucks.co.jp${item.item_img}`">
           <div class="card-body">
             <h5 class="card-title">{{ item.product_name }}</h5>
-            <h6 class="card-text">{{ trimText(item.catchcopy) }}</h6>
+            <h6 class="card-text" v-html="trimText(item.catchcopy)"/>
           </div>
           <div class="card-footer">
             <router-link :to="{name: 'item_details', params: {item_id: 1}}" class="btn btn-color-stb col-12">詳細へ</router-link>
