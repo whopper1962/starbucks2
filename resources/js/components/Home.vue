@@ -54,7 +54,7 @@ export default {
 <style lang="scss">
 .main-content {
   background-color:rgb(120, 95, 96);
-  padding: 20px;
+  padding: 50px 20px 20px 20px;
   height: 100%;
 }
 .card-original {

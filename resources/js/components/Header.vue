@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-header">
   <router-link :to="{name: 'items'}" class="navbar-brand">BucksHub<font-awesome-icon icon="fa-solid fa-mug-saucer" /></router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -43,3 +43,10 @@ export default {
   methods: {}
 }
 </script>
+<style lang="scss">
+.fixed-header {
+  position: fixed;
+  width: 100%;
+  z-index:9999;
+}
+</style>
