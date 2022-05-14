@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
 
 class LoginController extends Controller
 {
@@ -20,6 +23,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    use HasApiTokens;
 
     /**
      * Where to redirect users after login.
@@ -33,23 +37,28 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Login successful'], 200);
+        // dd($request->email);
+
+        $credentials = array(
+            'email' => $request->email,
+            'password' => $request->password
+        );
+
+        if (Auth::attempt($credentials, false)) {
+            $user = Auth::user();
+            dd($user);
+            $token = $request->user()->createToken('token-name');
+            return response()->json(['api_token' => $token->plainTextToken], 200);
         }
 
-        return response()->json(['message' => 'User not found'], 422);
+        return response()->json(['api_token' => null], 401);
     }
 
     public function logout()

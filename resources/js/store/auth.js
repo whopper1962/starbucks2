@@ -32,9 +32,12 @@ export default {
         .get('/api/user')
         .then(response => {
           commit('SET_IS_AUTH', true);
+          console.error(`SET!!!`);
           commit('SET_USER', response.data);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error(error);
+          console.error(`error!!!`);
           commit('SET_IS_AUTH', false);
           commit('SET_USER', null);
         });
