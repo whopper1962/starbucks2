@@ -5,7 +5,7 @@
         <div class="card card-original">
           <img class="card-img-top" :key="`item_img_${index}`" :src="`https://product.starbucks.co.jp${item.item_img}`">
           <div class="card-body">
-            <h5 class="card-title">{{ item.product_name }}</h5>
+            <h5 class="card-title">{{ trimProductName(item.product_name) }}</h5>
             <h6 class="card-text" v-html="trimText(item.catchcopy)"/>
           </div>
           <div class="card-footer">
@@ -36,6 +36,11 @@ export default {
           words = words.slice(0, size) + '...';
         }
         return words;
+      }
+    },
+    trimProductName () {
+      return function (productName) {
+        return productName.replace('&reg;', '');
       }
     }
   },
