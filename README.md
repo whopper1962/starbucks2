@@ -35,8 +35,12 @@ php artisan key:generate
 ```
 php artisan serve
 ```
-
 ### 5.
+```
+php artisan migrate
+```
+
+### 6.
 ```
 npm run watch
 ```
