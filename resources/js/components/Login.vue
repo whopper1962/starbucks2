@@ -25,29 +25,32 @@ export default {
   },
   methods: {
     async login() {
-      await axios.post('/api/auth/login', this.form).then((res) => {
+      axios.post('/api/auth/login', this.form).then((res) => {
         localStorage.setItem('accessToken', res.data.api_token);
+        return this.getAuthorizedUserInfo();
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          console.error('メールアドレスまたはパスワードが違います');
+        }
       });
-      return await this.getAuthorizedUserInfo();
     },
     async getAuthorizedUserInfo() {
-      return await axios.get('/api/user', {
-          headers: {
-            'Accept': "application/json",
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-          }
-        }).then(response => {
-          localStorage.setItem('authorized', true);
-          localStorage.setItem('authorizedUser', JSON.stringify(response.data));
-          this.$router.push('/items');
-        }).catch((error) => {
-          console.error(error);
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('authorized');
-          localStorage.removeItem('authorizedUser');
-          this.$router.push('/login');
-        });
+      axios.get('/api/user', {
+        headers: {
+          'Accept': "application/json",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }).then(response => {
+        localStorage.setItem('authorized', true);
+        localStorage.setItem('authorizedUser', JSON.stringify(response.data));
+        this.$router.push('/items');
+      }).catch((error) => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('authorized');
+        localStorage.removeItem('authorizedUser');
+        this.$router.push('/login');
+      });
     }
   },
 };
