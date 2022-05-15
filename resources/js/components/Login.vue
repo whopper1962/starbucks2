@@ -7,7 +7,7 @@
       </div>
       <div>
         <label>パスワード</label>
-        <input type="password" v-model="form.password" />
+        <input type="text" v-model="form.password" />
       </div>
       <button type="submit">ログイン</button>
     </form>
@@ -43,7 +43,7 @@ export default {
           this.$router.push('/items');
         }).catch((error) => {
           console.error(error);
-          localStorage.removeItem('accessToken')
+          localStorage.removeItem('accessToken');
           localStorage.removeItem('authorized');
           localStorage.removeItem('authorizedUser');
           this.$router.push('/login');

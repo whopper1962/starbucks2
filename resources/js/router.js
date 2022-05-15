@@ -53,9 +53,13 @@ router.beforeEach((to, from, next) => {
     }
     if (to.matched.some(record => record.meta.isAuthenticated)) {
         console.error('AUTHORIZED:', localStorage.getItem('authorized'));
-        if (localStorage.getItem('authorized')) {
+        if (localStorage.getItem('authorized') === 'true') {
+            // should check accessToken and authorizedUser
             next();
         } else {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('authorized');
+            localStorage.removeItem('authorizedUser');
             next({ name: 'login' });
         }
     } else {
