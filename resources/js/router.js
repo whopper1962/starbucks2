@@ -8,13 +8,16 @@ import Store from './store/index';
 const routes = [
     {
         path: '/login',
-        name: 'Login',
+        name: 'login',
         component: Login,
     },
     {
         path: '/',
         name: 'root',
-        redirect: { name: 'items' }
+        redirect: { name: 'items' },
+        meta: {
+            isAuthenticated: true,
+        }
     },
     {
         path: "/items",
@@ -27,7 +30,10 @@ const routes = [
     {
         path: "/items/:item_id",
         component: Details,
-        name: "item_details"
+        name: "item_details",
+        meta: {
+            isAuthenticated: true,
+        }
     },
     {
         path: '*',
@@ -42,15 +48,19 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.isAuthenticated)) {
-        console.error(Store.state.auth.isAuth);
-        if (!Store.state.auth.isAuth) {
-            next({ name: 'Login' });
-        } else {
-            next();
-        }
+    if (to.name === 'login' && localStorage.getItem('authorized') === 'true') {
+        next({name: 'items'})
     }
-    next();
+    if (to.matched.some(record => record.meta.isAuthenticated)) {
+        console.error('AUTHORIZED:', localStorage.getItem('authorized'));
+        if (localStorage.getItem('authorized')) {
+            next();
+        } else {
+            next({ name: 'login' });
+        }
+    } else {
+        next();
+    }
 });
 
 export default router;

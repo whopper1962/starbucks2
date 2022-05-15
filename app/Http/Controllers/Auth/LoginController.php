@@ -7,7 +7,6 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\HasApiTokens;
 
 class LoginController extends Controller
 {
@@ -23,7 +22,6 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-    use HasApiTokens;
 
     /**
      * Where to redirect users after login.
@@ -53,9 +51,8 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, false)) {
             $user = Auth::user();
-            dd($user);
-            $token = $request->user()->createToken('token-name');
-            return response()->json(['api_token' => $token->plainTextToken], 200);
+            $token = $request->user()->createToken('token-name')->accessToken;
+            return response()->json(['api_token' => $token], 200);
         }
 
         return response()->json(['api_token' => null], 401);
