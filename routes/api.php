@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('items', 'ItemController@index');
+Route::middleware('auth:api')->get('items', 'ItemController@index');
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);

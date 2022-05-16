@@ -46,10 +46,23 @@ export default {
   },
   methods: {
     executeApi () {
-      axios.get(`/api/items`).then((res) => {
+      axios.get(`/api/items`, {
+        headers: {
+          'Accept': "application/json",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }).then((res) => {
         this.items = res.data;
-      }).catch((err) => {
-        console.error(err);
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('authorized');
+          localStorage.removeItem('authorizedUser');
+          this.$router.push('/login');
+          return;
+        }
+        console.error(error);
       })
     }
   }
