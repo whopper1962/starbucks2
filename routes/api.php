@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->get('items', 'ItemController@index');
 
+Route::get('/items/{item_id}', 'ItemController@getDetails');
+
 Route::prefix('auth')->group(function () {
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);

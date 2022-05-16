@@ -9,7 +9,9 @@
             <h6 class="card-text" v-html="trimText(item.catchcopy)"/>
           </div>
           <div class="card-footer">
-            <router-link :to="{name: 'item_details', params: {item_id: 1}}" class="btn btn-color-stb col-12">詳細へ</router-link>
+            <router-link :to="{name: 'item_details', params: {item_id: item.id}}" class="btn btn-color-stb col-12">
+              詳細へ
+            </router-link>
           </div>
         </div>
       </div>

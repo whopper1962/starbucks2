@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Item;
+use App\Tweet;
 
 class ItemController extends Controller
 {
@@ -29,5 +30,11 @@ class ItemController extends Controller
             }
         }
         return $item->get();
+    }
+
+    public function getDetails ($item_id, Tweet $tweet, Item $item) {
+        $response = $item->find($item_id);
+        $response->related_tweets = $tweet->where('item_id', '=', $item_id)->get();
+        return $response;
     }
 }
